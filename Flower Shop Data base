@@ -1,0 +1,21 @@
+CREATE TABLE flowers (id INTEGER PRIMARY KEY, name TEXT, price INTEGER, quantity INTEGER, rating_out_of_five INTEGER);
+
+INSERT INTO flowers VALUES (1, "Roses", 14.99, 12, 4);
+INSERT INTO flowers VALUES (2, "Baby's Breath", 10.99, 4, 5);
+INSERT INTO flowers VALUES (3, "Tulips", 12.99, 8, 3);
+INSERT INTO flowers VALUES (4, "Daisies", 12.99, 15, 4);
+INSERT INTO flowers VALUES (5, "Sunflowers", 13.99, 4, 3);
+INSERT INTO flowers VALUES (6, "Chrysanthemums", 11.99, 9, 2);
+INSERT INTO flowers VALUES (7, "Lavendar", 16.99, 20, 5);
+INSERT INTO flowers VALUES (8, "Orchids", 12.99, 3, 5);
+INSERT INTO flowers VALUES (9, "Peonies", 11.99, 12, 3);
+INSERT INTO flowers VALUES (10, "Hydragea", 12.99, 6, 4);
+iNSERT INTO flowers VALUES (11, "Lilies", 13.99, 7, 4);
+iNSERT INTO flowers VALUES (12, "Daffodils", 12.99, 12,4);
+INSERT INTO flowers VALUES (13, "Irises", 10.99, 10, 3);
+INSERT INTO flowers values (14, "Periwinkle", 14.99, 20, 5);
+INSERT INTO flowers values (15, "Azeleas", 12.99, 9, 3);
+SELECT * FROM flowers;
+
+SELECT * FROM flowers GROUP BY price;
+
