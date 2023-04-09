@@ -1,0 +1,54 @@
+SELECT Country
+FROM chinook.customers;
+
+#1. Show Customers (their full names, customer ID, and country) who are not in the US.
+SELECT FirstName, LastName, CustomerId, Country
+FROM chinook.customers
+WHERE Country <> 'USA';
+
+#2. Show only the Customers from Brazil.
+SELECT FirstName, LastName, CustomerId, Country
+FROM chinook.customers
+WHERE Country = 'Brazil';
+
+#3. Find the Invoices of customers who are from Brazil. The resulting table should show the customer's full name, Invoice ID, 
+## Date of the invoice, and billing country.SELECT FirstName, LastName, InvoiceId, InvoiceDate, BillingCountry
+FROM chinook.invoices inv
+LEFT JOIN chinook.customers cust
+ON cust.CustomerId = inv.CustomerId
+WHERE inv.BillingCountry = 'Brazil';
+
+#4. How many Invoices were there in 2009?
+SELECT COUNT(*)
+FROM chinook.invoices
+WHERE InvoiceDate LIKE '2009%';
+
+#5. What are the total sales for 2009?
+SELECT SUM(UnitPrice)*Quantity
+FROM chinook.invoice_items it
+LEFT JOIN chinook.invoices inv
+ON it.InvoiceId = inv.InvoiceId
+WHERE InvoiceDate LIKE '2009%';
+##ALT solution
+SELECT SUM(Total)
+FROM chinook.Invoices
+WHERE InvoiceDate BETWEEN '2009-01-01' AND '2009-12-31';
+
+#6. Write a query that includes the purchased track name and each invoice line id.
+SELECT t.name, it.InvoiceLineId
+FROM chinook.Invoice_items it
+JOIN chinook.Tracks t
+ON it.TrackId = t.TrackId;
+
+#7. Which sales agent made the most dollars in sales in 2009?
+SELECT employees.FirstName, employees.LastName, sum(invoices.Total)
+FROM chinook.employees
+JOIN chinook.customers
+ON customers.SupportRepId = employees.EmployeeId
+
+JOIN chinook.invoices ON customers.CustomerId = invoices.CustomerId
+
+WHERE employees.Title = 'Sales Support Agent' 
+AND invoices.InvoiceDate LIKE '2009%' 
+GROUP BY employees.FirstName
+ORDER BY (round(sum(invoices.Total), 2))  DESC LIMIT 1;
