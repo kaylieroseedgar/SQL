@@ -52,3 +52,46 @@ WHERE employees.Title = 'Sales Support Agent'
 AND invoices.InvoiceDate LIKE '2009%' 
 GROUP BY employees.FirstName
 ORDER BY (round(sum(invoices.Total), 2))  DESC LIMIT 1;
+
+#8. Find a unique/distinct list of billing countries from the Invoice table and list them in alphabetical order.
+SELECT distinct BillingCountry
+FROM chinook.invoices
+ORDER BY BillingCountry asc;
+
+#9.List the customers full name, phone number, and email for customers who ordered tracks from the Rock genre.
+SELECT distinct c.FirstName, c.LastName, c.Phone, c.Email
+FROM chinook.customers c
+
+JOIN chinook.invoices inv
+ON  c.CustomerId = inv.CustomerID
+
+JOIN chinook.invoice_items ii
+ON inv.InvoiceId = ii.InvoiceId
+
+JOIN chinook.tracks t
+ON ii.TrackId = t.TrackId
+
+JOIN chinook.genres g
+ON t.Genreid= g.GenreId
+WHERE g.Name = 'Rock';
+
+#10. What is the shortest track that was purchased by a customer and what was the unit price?
+SELECT t.Milliseconds, i.UnitPrice
+FROM chinook.tracks t
+JOIN chinook.invoice_items i
+ON t.TrackId = i.TrackID
+ORDER BY t.Milliseconds asc LIMIT 1;
+
+#11. What is the shortest song in seconds?
+SELECT (t.Milliseconds)/1000 as Seconds
+FROM chinook.tracks t
+JOIN chinook.invoice_items i
+ON t.TrackId = i.TrackID
+ORDER BY t.Milliseconds asc LIMIT 1;
+
+#12. What tracks are more than 2 minutes long but less than 3 minutes?
+ELECT tracks.Name, ROUND(tracks.Milliseconds)/60000.0 as Minutes
+FROM chinook.tracks
+WHERE Minutes BETWEEN 2.0 AND 3.0;
+
+#13. How many of each media type was sold?
