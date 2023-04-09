@@ -1,0 +1,45 @@
+#Here I downloaded a California Traffic Collision data set from Kaggle.
+
+
+#1. First I explored the collisons table.
+SELECT *
+FROM switrs.collisions;
+
+#2. I found the total number of collisions in LA.
+SELECT COUNT(*)
+FROM switrs.collisions
+WHERE county_location = 'los angeles';
+
+#3. I found the total number of collisons that occured on Route 405.
+SELECT COUNT(*)
+FROM switrs.collisions
+WHERE primary_road = 'RT 405'
+OR secondary_road = 'RT 405';
+
+#4. Then I explored the parties table.
+SELECT *
+FROM switrs.parties;
+
+#5. I found the total number collisons where a cellphone was in use during the collision.
+SELECT COUNT(*)
+FROM switrs.parties
+WHERE cellphone_use_type LIKE '%cellphone in use%';
+
+#6. I found the total number of collisions where the the driver at fault was under 20 years old.
+SELECT COUNT(*)
+FROM switrs.parties
+WHERE party_age < 20
+AND at_fault = 1;
+
+#7. I found the age and sex of drivers involved in collisions that were drinking underage.
+SELECT party_age, party_sex, party_sobriety
+FROM switrs.parties
+WHERE party_age < 21
+AND party_sobriety LIKE '%under influence%';
+
+#8.I found the age, sex, and location of drivers involved in fatal collisions.
+SELECT party_sex, party_age, county_location
+FROM switrs.parties
+JOIN switrs.collisions
+ON collisions.case_id = parties.case_id
+WHERE collision_severity = 'fatal';
