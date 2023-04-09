@@ -95,3 +95,8 @@ FROM chinook.tracks
 WHERE Minutes BETWEEN 2.0 AND 3.0;
 
 #13. How many of each media type was sold?
+SELECT COUNT(tracks.Name) AS Number_Sold, media_types.Name
+FROM chinook.tracks
+LEFT JOIN chinook.media_types
+ON tracks.MediaTypeId = media_types.MediaTypeId 
+GROUP BY media_types.MediaTypeId;
